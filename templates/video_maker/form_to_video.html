@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}
+  Создание бегущей строки
+{% endblock %}
+{% block content %}
+  <h5 class="card-header"><font size="5" color="#8A8A8A">Введите текст</font></h5>
+  {% load django_bootstrap5 %}
+  <form method="post"> 
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% bootstrap_button button_type="submit" content="Отправить" style="background-color: black" %}
+  </form>
+{% endblock %}

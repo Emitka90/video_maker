@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}
+  Список предыдущих запросов
+{% endblock %}
+{% block content %}
+  <h5 class="card-header"><font size="5" color="#8A8A8A">Последние пять запросов:</font></h5>
+  {% for video in videos %}
+    <article class="mb-5">
+        <p> <font size="5" color="#000000">{{ video.text }}</font> </p>
+        <p> Дата создания: {{ video.created_at }} </p>
+    </article>
+  {% endfor %}
+  <a href="{% url 'video' %}" class="btn btn-primary" style="background-color: black">
+    <font size="3" color="#FFFFFF">Новый запрос</font>
+  </a>
+{% endblock %}
