@@ -45,15 +45,16 @@ def video_generator(text):
 
 
 def video_maker(request):
-    form = VideoForm(request.POST or None)
+    if request.GET:
+        form = VideoForm(request.GET)
+        if form.is_valid():
+            form.save()
+            text = request.GET.get('text')
+            video_generator(text)
+            video_path = os.path.join(settings.BASE_DIR, "video_text.mp4")
+            with open(video_path, 'rb') as video_file:
+                response = HttpResponse(video_file, content_type='video/avi')
+                response['Content-Disposition'] = 'attachment; filename="video_text.mp4"'
+                return response
     context = {'form': form}
-    if form.is_valid():
-        text = request.POST.get('text')
-        form.save()
-        video_generator(text)
-        video_path = os.path.join(settings.BASE_DIR, "video_text.mp4")
-        with open(video_path, 'rb') as video_file:
-            response = HttpResponse(video_file, content_type='video/avi')
-            response['Content-Disposition'] = 'attachment; filename="video_text.mp4"'
-            return response
     return render(request, 'video_maker/form_to_video.html', context)
