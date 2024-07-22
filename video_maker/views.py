@@ -22,15 +22,16 @@ def video_generator(text):
     font_thickness = 1
     font_color = (255, 255, 255)
     text_size = cv2.getTextSize(text, font, font_scale, font_thickness)
+    print(text_size)
     x, y = 100, 100 // 2
 
     while True:
         frame.fill(0)
-        x -= 5
+        x -= (text_size[0][0] / 72) + 1
         cv2.putText(
             frame,
             text,
-            (x, y),
+            ((int(x)), y),
             font,
             font_scale,
             font_color,
@@ -39,7 +40,6 @@ def video_generator(text):
         out.write(frame)
         if x + text_size[0][0] < 0:
             break
-
     out.release()
     return out
 
